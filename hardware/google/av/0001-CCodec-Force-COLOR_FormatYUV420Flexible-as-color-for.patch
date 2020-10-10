@@ -1,0 +1,30 @@
+From 956595649bfe6c2d5f18c55a2b9569906f201d3f Mon Sep 17 00:00:00 2001
+From: Alfred Neumayer <dev.beidl@gmail.com>
+Date: Fri, 9 Oct 2020 21:58:11 +0200
+Subject: [PATCH] CCodec: Force COLOR_FormatYUV420Flexible as color format
+
+The surface existance check always results in COLOR_FormatSurface to be selected,
+
+which we don't support yet. Fix this by forcing COLOR_FormatYUV420Flexible.
+
+Change-Id: If6d18310cece62c58fb8dd10a00fcda80364ac47
+---
+ media/sfplugin/CCodec.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/media/sfplugin/CCodec.cpp b/media/sfplugin/CCodec.cpp
+index 1e74658..6671aa3 100644
+--- a/media/sfplugin/CCodec.cpp
++++ b/media/sfplugin/CCodec.cpp
+@@ -766,7 +766,7 @@ void CCodec::configure(const sp<AMessage> &msg) {
+                  * needed for decoders.
+                  */
+                 if (!(config->mDomain & Config::IS_ENCODER)) {
+-                    format = (surface == nullptr) ? COLOR_FormatYUV420Planar : COLOR_FormatSurface;
++                    format = COLOR_FormatYUV420Flexible;
+                 }
+             }
+ 
+-- 
+2.25.1
+
